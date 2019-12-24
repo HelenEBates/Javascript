@@ -1,0 +1,44 @@
+//This challenge uses switch and the logical operators to calculate which team has the greatest score
+//coding challenge 2 
+var Mike1, Mike2, Mike3, John1, John2, John3, Mary1, Mary2, Mary3, averageScoresMike, averageScoresJohn, averageScoreMary;
+Mike1 = 116;
+Mike2 = 94;
+Mike3 = 123;
+John1 = 89;
+John2 = 120;
+John3 = 103;
+Mary1 = 97;
+Mary2 = 134;
+Mary3 = 105;
+
+averageScoresMike = (Mike1 + Mike2 + Mike3) / 3;
+averageScoresJohn = (John1 + John2 + John3) / 3;
+averageScoreMary = (Mary1 + Mary2 + Mary3) / 3;
+
+switch (true) {
+case averageScoresJohn > averageScoresMike && averageScoresJohn > averageScoreMary:
+    console.log('John\'s team scored on average more ponts than Mike\s team, John\s teams average score was ' + averageScoresJohn );
+    break;
+case averageScoresMike > averageScoresJohn &&  averageScoresMike > averageScoreMary:
+    console.log('Mike\s team scored on average more ponts than John\'s team, Mike\s teams average score was ' + averageScoresMike );
+    break;
+case averageScoreMary > averageScoresJohn && averageScoreMary > averageScoresMike:
+    console.log('Mary\s team scored higher than both other teams');
+    break;
+case averageScoreMary === averageScoresJohn && averageScoreMary > averageScoresMike:
+        console.log('Mary and John were joint winners');
+        break;
+case  averageScoresMike > averageScoreMary && averageScoresMike === averageScoresJohn:
+        console.log('Mike and John were joint winners');
+        break;
+case  averageScoresMike > averageScoresJohn && averageScoresMike === averageScoreMary:
+        console.log('Mike and Mary were joint winners')
+        break;
+case  averageScoreMary === averageScoresMike && averageScoreMary === averageScoresJohn:
+        console.log('It was a draw');
+        break;  
+default: console.log('inconclusive');
+    break;
+    
+} 
+console.log(averageScoreMary, averageScoresJohn, averageScoresMike);
