@@ -1,0 +1,23 @@
+//first attempt which is not complete
+//a tip calculator using Arrays and Objects
+var JohnFamily = {
+    bills : [],
+    tips : [],
+    percentCalc : function() {
+        for(var i = 0; i < JohnFamily.length; i++)
+        if (tips[i] < 50) {
+            this.percent = 0.2
+        } else if (tips[i] > 200) {
+            this.percent = 0.1
+        } else {
+            this.percent = 0.15
+        }
+    },
+    tipCalc : function() {
+        for (var i = 0; i < JohnFamily.length; i++)
+        this.total = this.bills[i] * this.percent[i]
+    }
+}
+tipCalc([124,48,268,180,42])
+console.log(JohnFamily)
+console.log(JohnFamily.total)
