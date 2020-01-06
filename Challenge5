@@ -21,3 +21,32 @@ var JohnFamily = {
 tipCalc([124,48,268,180,42])
 console.log(JohnFamily)
 console.log(JohnFamily.total)
+
+//after looking at the solution there were several changes, 
+var AmyFamily = {
+    name : 'Amy',
+    bills : [124, 48, 268,180,42], //data is entered here which I didn't think you could enter
+    //tips : [], this is defined in the funciton not in the property
+    tipCalc : function() {
+        this.tips = []; //empty array which will be filled by iterations of the loop
+        this.finalValues = [];
+
+        for (var i = 0; i < this.bills.length; i++) //. is an operator, is executed left to right
+        {
+             //in each iteration determine tippling rules
+             var percent;
+             var bill = this.bills[i]; //used so that we don't have to repeat this.bills[i]
+             if ( bill < 50) {
+                percent = .2;
+            } else if (bill >= 50 && bill < 200) {
+                percent = .15
+            } else {
+                percent = .10
+            }
+             //add result to the correct array
+             this.tips[i] = bill * percent;
+             this.finalValues[i] = bill + bill * percent;
+        }
+    
+    }
+}
