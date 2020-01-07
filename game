@@ -1,0 +1,114 @@
+//game from module in https://github.com/jonasschmedtmann/complete-javascript-course
+//issue is new game button has disappeard, otherwise works well
+/*
+Game rules:
+- The game has two players who take turns
+- In each turn a player roles a dice as many times as they want, each result gets added to their round score.
+- However if the player rolls a 1, all his round score is lost. The game then moves onto the next player.
+- A player can choose to hold, meaning that their round score is taken and added to their global score, and the game 
+goes into the next player.
+- The first player to get a global score of 100 wins 
+*/
+
+var scores, roundScore, activePlayer, gamePlaying //declaring state in game playing, can be used anywhere else
+//why is dice not declared in this list?
+init();
+
+function init() {
+    scores = [0,0]; 
+roundScore = 0;  
+activePlayer = 0;
+gamePlaying = true;
+
+document.getElementById('score-0').textContent = '0';  //current global score for player 1
+document.getElementById('score-1').textContent = '0';  //current global score for player 2
+document.getElementById('current-0').textContent = '0'; //dice round score for player 1
+document.getElementById('current-1').textContent = '0'; //dice rounds core for player 2
+document.getElementById('name-0').textContent = 'Player 1';
+document.getElementById('name-1').textContent = 'Player 2';
+
+//remove these to re set the game
+document.querySelector('.player-0-panel').classList.remove('winner');
+document.querySelector('.player-1-panel').classList.remove('winner');
+document.querySelector('.player-0-panel').classList.remove('active');
+document.querySelector('.player-1-panel').classList.remove('active');
+
+//add back so that player 1 starts the new game
+document.querySelector('.player-0-panel').classList.add('active');
+}
+
+function nextPlayer() {
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+    roundScore = 0; 
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+    
+    document.querySelector('.player-0-panel').classList.toggle('active'); //this will toggle between the activePlayer
+    document.querySelector('.player-1-panel').classList.toggle('active');
+    
+    document.querySelector('.dice').style.display = 'none'; //this makes the dice disappear if the dice is equal to 1
+
+}
+//an anonymous function as it is not repeated
+document.querySelector('.btn-new').addEventListener('click', init); //passing in init, not calling it here, but after click
+
+
+document.querySelector('.dice').style.display = 'none' //setting display property in css to hide it
+
+
+//use an anonymous function here
+document.querySelector('.btn-roll').addEventListener('click', function() {
+    if (gamePlaying) { //this is a boolean value so is either true or false
+
+    //action of callback function here
+    // 1. need a randmon number 
+     var dice = Math.floor(Math.random() * 6) + 1;
+     document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>'; 
+     // 2. display the result
+     var diceDOM = document.querySelector('.dice');
+     diceDOM.style.display = 'block';
+     diceDOM.src = 'dice-' + dice + '.svg' //adds the number stored in dice variable to end of file name
+
+    // 3. update the round score if the rolled number not a 1
+    if (dice !== 1) {
+        //add score
+        roundScore += dice;
+        document.querySelector('#current-' + activePlayer).textContent = roundScore; //textContent getters or setters
+    } else {
+        nextPlayer();
+        
+        document.querySelector('.player-0-panel').classList.toggle('active'); //this will toggle between the activePlayer
+        document.querySelector('.player-1-panel').classList.toggle('active');
+       
+        document.querySelector('.dice').style.display = 'none'; //this makes the dice disappear if the dice is equal to 1
+
+    }
+}
+});
+document.querySelector('.btn-hold').addEventListener('click', function() {
+    if (gamePlaying ) {
+    //add roundScore to players globalScore
+      scores [activePlayer] += roundScore; //scores at position activePlayer
+
+    //update the UI with 
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer]
+    
+    //check if player won the game
+    if (scores[activePlayer] >= 10) {
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner';
+    
+    document.querySelector('.dice').style.display = 'none';
+    document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+    document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+    //document.querySelector('.btn-new').style.display = 'block'; //one issue is new game button has disappeared
+
+    gamePlaying = false; //sets the variable to false if the game has been won
+    } else {
+    //next player
+    nextPlayer();
+    }; 
+}
+})
+
+
+
