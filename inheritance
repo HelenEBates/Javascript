@@ -1,0 +1,32 @@
+//example of inheritance with methods
+
+//function constructor for writing a blueprint
+var Person = function(name, yearofBirth, job, dietary) {
+    this.name = name,
+    this.yearofBirth = yearofBirth,
+    this.job = job,
+    this.dietary = dietary
+}
+
+var Amy = new Person('Amy', 1980, 'Sales', 'Vegan');
+var Baby = new Person('Baby', 2019, 'playing', 'milk');
+
+// adding a method
+Person.prototype.calcAge = function() {
+    console.log(2016 - this.yearofBirth)  
+}
+Amy.calcAge();
+console.log(Amy);
+
+Person.prototype.calcMeal = function() {
+    if(this.dietary === 'Vegan') {
+        console.log('Amy eats plants')
+    } else if (this.dietary === 'milk') {
+        console.log('Bottle of milk')
+    } else {
+        console.log('Meat')
+    }
+}
+
+Amy.calcMeal();
+Baby.calcMeal();
